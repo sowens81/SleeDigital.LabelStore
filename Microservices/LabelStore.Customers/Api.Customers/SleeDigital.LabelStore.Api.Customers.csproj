@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'LabelStore.Api.Customers' " />
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="SleeDigital.LabalStore.Libruary" Version="0.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="SleeDigital.LabalStore.Libruary" />
+  </ItemGroup>
+</Project>
