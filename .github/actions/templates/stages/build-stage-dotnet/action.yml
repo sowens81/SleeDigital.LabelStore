@@ -1,0 +1,23 @@
+name: build-stage-dotnet
+description:
+
+inputs: 
+    dotnetVersion:
+        description: usage of the paramter
+        required: true
+    dotnetProjectName:
+        description: Name of the .Net Projects where Coverage test will be run.
+        required: true
+    
+runs:
+    using: "composite"
+    steps:
+        - name: dotnet-build
+        uses: ./.github/actions/templates/steps/dotnet-build
+        with:
+            dotnetVersion: ${{ inputs.dotnetVersion}}
+
+        - name: dotnet-codecoverage
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
+        uses: ./.github/actions/templates/steps/dotnet-codecovrage
+            dotnetProjectName: ${{ inputs.dotnetProjectName}}

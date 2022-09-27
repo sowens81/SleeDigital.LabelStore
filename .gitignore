@@ -72,6 +72,8 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+TestResults/
+coveragereport/
 
 # Visual Studio 2015
 .vs/

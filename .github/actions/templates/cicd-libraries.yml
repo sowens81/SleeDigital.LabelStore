@@ -1,0 +1,33 @@
+name: CICD Libary - {Library Name}
+
+on:
+  push:
+    branches: [ "Main" ]
+    tags:
+    - '*'
+  pull_request:
+    branches: [ "Main" ]
+    
+env:
+  buildAgent: ubuntu-latest # Options: ubuntu-latest
+  libraryType: nuget # Options: nuget, npm
+  dotnetLibraryName: # Name of the libary Solution File name and directory name (.Net/Nuget), they need to be the same.
+  npmLibraryName: # TBD
+  rootDirectory: ./src/SharedLibraries
+  developmentFrameworkVersion: 6.0.x # if .Net example 6.0.x / 
+
+jobs:
+  build:
+    name: build-stage-dotnet
+    if: ${{ libraryType }} == dotnet
+    runs-on: ${{ env.buildAgent }}
+    defaults:
+      run:
+        working-directory: ${{ env.rootDirectory }}/${{ env.libraryType }}
+    steps:
+      - use: actions/checkout@v2
+      - name: build-dotnet
+        uses: ./.github/actions/templates/stages/build-stage-dotnet
+        with:
+          dotnetVersion: ${{ env.developmentFrameworkVersion}}
+          dotnetProjectName: ${{ env.dotnetLibraryName }}
