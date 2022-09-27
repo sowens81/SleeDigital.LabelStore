@@ -17,8 +17,8 @@ run:
   steps:
   - uses: ./.github/templates/steps/dotnet-build
     with:
-      dotnetVersion: ${{ inputs.dotnetVersion}}
-      solutionDirectory: ${{ inputs.solutionDirectory}}
+      dotnetVersion: ${{ inputs.dotnetVersion }}
+      solutionDirectory: ${{ inputs.solutionDirectory }}
 
   - uses: ./.github/templates/steps/dotnet-codecovrage
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}

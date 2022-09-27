@@ -10,10 +10,8 @@ on:
     - 'Main'
     
 env:
-  libraryType: nuget # Options: nuget, npm
-  dotnetLibraryName: SleeDigital.LabelStore.Library # Name of the libary Solution File name and directory name (.Net/Nuget), they need to be the same.
-  npmLibraryName: n/a # TBD
-  rootDirectory: ./src/SharedLibraries
+  dotnetSolutionName: SleeDigital.LabelStore.Library # Name of the libary Solution File name and directory name (.Net/Nuget), they need to be the same.
+  rootDirectory: ./src/SharedLibraries/nuget
   developmentFrameworkVersion: 6.0.x # if .Net example 6.0.x / 
 
 jobs:
@@ -23,10 +21,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: build-stage-dotnet
-        uses: ./.github/templates/stages/build-stage-dotnet
-        if: ${{ env.libraryType == 'nuget' }}
+      - name: dotnetbuild
+        uses: ./.github/templates/steps/dotnet-build
         with:
             dotnetVersion: ${{ env.developmentFrameworkVersion}}
-            dotnetProjectName: ${{ env.dotnetLibraryName }}
             solutionDirectory: ${{ env.rootDirectory }}/${{ env.libraryType }}/${{ env.dotnetLibraryName }}
+
+      - name: dotnet-codecoverage
+        uses: ./.github/templates/steps/dotnet-codecoverage
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
+        with:
+            dotnetProjectName: ${{ env.dotnetSolutionName}}
+            solutionDirectory: ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
