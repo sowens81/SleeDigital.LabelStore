@@ -18,13 +18,14 @@ env:
 
 jobs:
   build:
-    name: build-stage-dotnet
-    if: env.libraryType == 'nuget' 
+    name: build-stage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: build-dotnet
         uses: ./.github/templates/stages/build-stage-dotnet
+        if: ${{ env.libraryType == 'nuget' }}
         with:
           dotnetVersion: ${{ env.developmentFrameworkVersion}}
           dotnetProjectName: ${{ env.dotnetLibraryName }}
