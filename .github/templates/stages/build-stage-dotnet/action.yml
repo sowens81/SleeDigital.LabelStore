@@ -15,11 +15,24 @@ inputs:
 runs:
     using: "composite"
     steps:
-        - name: dotnet-build
-        uses: ./.github/templates/steps/dotnet-build
+        - name: Setup .NET
+        uses: actions/setup-dotnet@v2
         with:
-            dotnetVersion: ${{ inputs.dotnetVersion}}
-            solutionDirectory: ${{ inputs.solutionDirectory}}
+            dotnet-version: ${{ inputs.dotnetVersion}}
+        
+        - name: Restore dependencies
+        run: |
+            cd ${{ inputs.solutionDirectory }}
+            dotnet restore
+        
+        - name: |
+            cd ${{ inputs.solutionDirectory }}Build
+            run: dotnet build --no-restore
+        
+        - name: |
+            cd ${{ inputs.solutionDirectory }}
+            run: dotnet test --no-build --verbosity normal
+
         
         - name: dotnet-codecoverage
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}

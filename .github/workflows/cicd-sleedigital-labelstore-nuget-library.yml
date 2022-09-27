@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: build-dotnet
+      - name: build-stage-dotnet
         uses: ./.github/templates/stages/build-stage-dotnet
         if: ${{ env.libraryType == 'nuget' }}
         with:
