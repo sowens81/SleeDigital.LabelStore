@@ -11,7 +11,7 @@ on:
     
 env:
   dotnetSolutionName: SleeDigital.LabelStore.Library # Name of the libary Solution File name and directory name (.Net/Nuget), they need to be the same.
-  rootDirectory: ./src/SharedLibraries/nuget
+  rootDirectory: ./src/sharedlibraries/nuget
   developmentFrameworkVersion: 6.0.x # if .Net example 6.0.x / 
 
 jobs:
@@ -39,5 +39,5 @@ jobs:
       - name: Test Solution
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
         run: |
-          cd ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
+          cd "${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}"
           run: dotnet test --no-build --verbosity normal
