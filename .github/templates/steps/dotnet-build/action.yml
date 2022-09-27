@@ -13,7 +13,7 @@ run:
     using: "composite"
     steps:
     - name: Setup .NET
-      ses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: ${{ inputs.dotnetVersion}}
     
