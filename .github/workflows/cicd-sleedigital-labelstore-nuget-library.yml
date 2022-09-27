@@ -28,16 +28,28 @@ jobs:
       
       - name: Restore dependencies
         run: |
-          cd ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
+          cd 
           dotnet restore
       
       - name: Build Solution
         run: |
-          cd ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
+          cd ${{ env.rootDirectory }}/${{ env.dotnetSolutionName }}
           run: dotnet build --no-restore
       
       - name: Test Solution
+        run: |
+          cd ${{ env.rootDirectory }}/${{ env.dotnetSolutionName }}
+          run: dotnet test --no-build --verbosity normal
+
+      - name: Generate coverage report
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
         run: |
-          cd "${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}"
-          run: dotnet test --no-build --verbosity normal
+          cd ${{ env.rootDirectory }}/${{ env.dotnetSolutionName }}/${{ env.dotnetSolutionName }}.Tests/
+          dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      
+      - name: Publish coverage report to coveralls.io
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ${{ env.rootDirectory }}/${{ env.dotnetSolutionName }}/${{ env.dotnetSolutionName }}.Tests/TestResults/coverage.info
