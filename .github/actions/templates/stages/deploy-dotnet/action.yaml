@@ -1,0 +1,17 @@
+name: tbd
+description:
+
+inputs: 
+    dotnetVersion:
+        description: usage of the paramter
+        required: true
+    
+runs:
+    using: "composite"
+    steps:
+        - uses: actions/checkout@v2
+
+        - name: build-dotnet
+        uses: ./.github/actions/templates/stages/steps/tbd
+        with:
+            tbd: ${{ inputs.dotnetVersion}}

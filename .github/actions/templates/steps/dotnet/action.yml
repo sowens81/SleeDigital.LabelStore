@@ -1,0 +1,25 @@
+name: dotnet
+description: Restore, Build & Test a .Net Solutuon
+
+inputs: 
+    dotnetVersion:
+        description: version of the dotnet libary example 6.0.x
+        required: true
+    
+runs:
+    using: "composite"
+    steps:
+
+        - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+            dotnet-version: ${{ inputs.dotnetVersion}}
+        
+        - name: Restore dependencies
+        run: dotnet restore
+        
+        - name: Build
+        run: dotnet build --no-restore
+        
+        - name: Test
+        run: dotnet test --no-build --verbosity normal
