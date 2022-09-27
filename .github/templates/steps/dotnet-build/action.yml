@@ -22,10 +22,12 @@ run:
             cd ${{ inputs.solutionDirectory }}
             dotnet restore
         
-        - name: |
+        - name: Build Solution
+        run: |
             cd ${{ inputs.solutionDirectory }}Build
             run: dotnet build --no-restore
         
-        - name: |
+        - name: Test Solution
+        run: |
             cd ${{ inputs.solutionDirectory }}
             run: dotnet test --no-build --verbosity normal
