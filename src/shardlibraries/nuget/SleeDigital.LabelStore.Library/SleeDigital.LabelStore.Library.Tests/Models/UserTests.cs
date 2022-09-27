@@ -38,6 +38,25 @@ namespace SleeDigital.LabelStore.Library.Tests.Models
         }
 
         [Fact]
+        public void Assert_User_Model_Has_String_AzureObjectId_Property()
+        {
+            // Arrange
+
+            string azureObjectId = Guid.NewGuid().ToString();
+
+            // Act
+            User user = new User()
+            {
+                AzureObjectId = azureObjectId
+            };
+
+            // Assert
+
+            Assert.True(azureObjectId == user.AzureObjectId);
+
+        }
+
+        [Fact]
         public void Assert_User_Model_Has_String_Email_Address_Property()
         {
             // Arrange

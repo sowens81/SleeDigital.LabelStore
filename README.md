@@ -2,6 +2,8 @@
 
 SleeDigital LabelStore is an Microservice Application Demo for Microsoft Azure. It is developed using React.js and React.Native for the Frontend web and mobile application, and c#/.Net6 for backend Microservice containers and functions. 
 
+[![Coverage Status](https://coveralls.io/repos/github/sowens81/SleeDigital.LabelStore/badge.svg?branch=Main)](https://coveralls.io/github/sowens81/SleeDigital.LabelStore?branch=Main)
+
 ## Installation
 TBD
 
