@@ -12,7 +12,7 @@ inputs:
         description: Directory location of the .Net Solution file.
         required: true
 
-runs:
+run:
   using: "composite"
   steps:
   - uses: ./.github/templates/steps/dotnet-build

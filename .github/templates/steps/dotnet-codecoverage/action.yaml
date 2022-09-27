@@ -9,7 +9,7 @@ inputs:
         description: Directory location of the .Net Solution file.
         required: true
     
-runs:
+run:
     using: "composite"
     steps:  
     - name: Generate coverage report
