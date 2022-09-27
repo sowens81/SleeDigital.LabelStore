@@ -2,12 +2,14 @@ name: CICD Library - SleeDigital LabelStore Library (Nuget)
 
 on:
   push:
-    branches: [ "Main" ]
+    branches: 
+    - 'main'
+    - 'releases/**'
   pull_request:
-    branches: [ "Main" ]
+    branches: 
+    - 'Main'
     
 env:
-  buildAgent: ubuntu-latest # Options: ubuntu-latest
   libraryType: nuget # Options: nuget, npm
   dotnetLibraryName: SleeDigital.LabelStore.Library # Name of the libary Solution File name and directory name (.Net/Nuget), they need to be the same.
   npmLibraryName: n/a # TBD
@@ -18,7 +20,7 @@ jobs:
   build:
     name: build-stage-dotnet
     if: ${{ env.libraryType == 'nuget' }}
-    runs-on: ${{ env.buildAgent }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: build-dotnet
