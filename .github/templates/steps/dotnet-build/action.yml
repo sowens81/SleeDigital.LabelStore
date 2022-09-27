@@ -15,19 +15,19 @@ run:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: ${{ github.event.inputs.dotnetVersion }}
+        dotnet-version: ${{ inputs.dotnetVersion }}
     
     - name: Restore dependencies
       run: |
-        cd ${{ github.event.inputs.solutionDirectory }}
+        cd ${{inputs.solutionDirectory}}
         dotnet restore
     
     - name: Build Solution
       run: |
-        cd ${{ github.event.inputs.solutionDirectory }}
+        cd ${{inputs.solutionDirectory}}
         run: dotnet build --no-restore
     
     - name: Test Solution
       run: |
-        cd ${{ github.event.inputs.solutionDirectory }}
+        cd ${{inputs.solutionDirectory}}
         run: dotnet test --no-build --verbosity normal

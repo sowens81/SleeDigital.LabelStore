@@ -21,15 +21,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: dotnetbuild
-        uses: ./.github/templates/steps/dotnet-build
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
         with:
-            dotnetVersion: ${{ env.developmentFrameworkVersion}}
-            solutionDirectory: ${{ env.rootDirectory }}/${{ env.libraryType }}/${{ env.dotnetLibraryName }}
-
-      - name: dotnet-codecoverage
-        uses: ./.github/templates/steps/dotnet-codecoverage
+          dotnet-version: ${{ env.developmentFrameworkVersion }}
+      
+      - name: Restore dependencies
+        run: |
+          cd ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
+          dotnet restore
+      
+      - name: Build Solution
+        run: |
+          cd ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
+          run: dotnet build --no-restore
+      
+      - name: Test Solution
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
-        with:
-            dotnetProjectName: ${{ env.dotnetSolutionName}}
-            solutionDirectory: ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
+        run: |
+          cd ${{ env.rootDirectory }}/${{ env.dotnetLibraryName }}
+          run: dotnet test --no-build --verbosity normal
