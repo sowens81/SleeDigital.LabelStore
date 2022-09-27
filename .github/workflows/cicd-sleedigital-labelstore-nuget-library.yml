@@ -19,7 +19,7 @@ env:
 jobs:
   build:
     name: build-stage-dotnet
-    if: ${{ env.libraryType == 'nuget' }}
+    if: libraryType == 'nuget' 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
