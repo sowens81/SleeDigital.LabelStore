@@ -27,7 +27,8 @@ jobs:
     steps:
       - use: actions/checkout@v2
       - name: build-dotnet
-        uses: ./.github/actions/templates/stages/build-stage-dotnet
+        uses: ./.github/templates/stages/build-stage-dotnet
         with:
           dotnetVersion: ${{ env.developmentFrameworkVersion}}
           dotnetProjectName: ${{ env.dotnetLibraryName }}
+          solutionDirectory: ${{ env.rootDirectory }}/${{ env.libraryType }}

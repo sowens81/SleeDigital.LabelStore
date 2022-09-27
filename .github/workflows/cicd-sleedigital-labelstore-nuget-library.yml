@@ -9,7 +9,7 @@ on:
 env:
   buildAgent: ubuntu-latest # Options: ubuntu-latest
   libraryType: nuget # Options: nuget, npm
-  dotnetLibraryName: # Name of the libary Solution File name and directory name (.Net/Nuget), they need to be the same.
+  dotnetLibraryName: SleeDigital.LabelStore.Library # Name of the libary Solution File name and directory name (.Net/Nuget), they need to be the same.
   npmLibraryName: # TBD
   rootDirectory: ./src/SharedLibraries
   developmentFrameworkVersion: 6.0.x # if .Net example 6.0.x / 
@@ -17,15 +17,13 @@ env:
 jobs:
   build:
     name: build-stage-dotnet
-    if: ${{ libraryType }} == dotnet
+    if: ${{ env.libraryType == 'nuget' }}
     runs-on: ${{ env.buildAgent }}
-    defaults:
-      run:
-        working-directory: ${{ env.rootDirectory }}/${{ env.libraryType }}
     steps:
-      - use: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: build-dotnet
-        uses: ./.github/actions/templates/stages/build-stage-dotnet
+        uses: ./.github/templates/stages/build-stage-dotnet
         with:
           dotnetVersion: ${{ env.developmentFrameworkVersion}}
           dotnetProjectName: ${{ env.dotnetLibraryName }}
+          solutionDirectory: ${{ env.rootDirectory }}/${{ env.libraryType }}/${{ env.dotnetLibraryName }}
