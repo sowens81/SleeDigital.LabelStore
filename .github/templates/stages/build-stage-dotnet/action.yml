@@ -11,34 +11,17 @@ inputs:
     solutionDirectory:
         description: Directory location of the .Net Solution file.
         required: true
-    
-runs:
-    using: "composite"
-    steps:
-        - name: Setup .NET
-        uses: actions/setup-dotnet@v2
-        with:
-            dotnet-version: ${{ inputs.dotnetVersion}}
-        
-        - name: Restore dependencies
-        run: |
-            cd ${{ inputs.solutionDirectory }}
-            dotnet restore
-        
-        - name: Build Solution
-        run: |
-            cd ${{ inputs.solutionDirectory }}
-            dotnet build --no-restore
-        
-        - name: Test Solution
-        run : |
-            cd ${{ inputs.solutionDirectory }}
-            run: dotnet test --no-build --verbosity normal
 
-        
-        - name: dotnet-codecoverage
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
-        uses: ./.github/templates/steps/dotnet-codecovrage
-        with:
-            dotnetProjectName: ${{ inputs.dotnetProjectName}}
-            solutionDirectory: ${{ inputs.solutionDirectory}}
+runs:
+  using: "composite"
+  steps:
+  - uses: ./.github/templates/steps/dotnet-build
+    with:
+      dotnetVersion: ${{ inputs.dotnetVersion}}
+      solutionDirectory: ${{ inputs.solutionDirectory}}
+
+  - uses: ./.github/templates/steps/dotnet-codecovrage
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
+    with:
+      dotnetProjectName: ${{ inputs.dotnetProjectName}}
+      solutionDirectory: ${{ inputs.solutionDirectory}}
