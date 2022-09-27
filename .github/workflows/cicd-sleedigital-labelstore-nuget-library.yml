@@ -3,8 +3,8 @@ name: CICD Library - SleeDigital LabelStore Library (Nuget)
 on:
   push:
     branches: 
-    - 'main'
-    - 'releases/**'
+    - 'Main'
+    - 'feature/**'
   pull_request:
     branches: 
     - 'Main'
