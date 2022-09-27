@@ -27,6 +27,6 @@ jobs:
         uses: ./.github/templates/stages/build-stage-dotnet
         if: ${{ env.libraryType == 'nuget' }}
         with:
-          dotnetVersion: ${{ env.developmentFrameworkVersion}}
-          dotnetProjectName: ${{ env.dotnetLibraryName }}
-          solutionDirectory: ${{ env.rootDirectory }}/${{ env.libraryType }}/${{ env.dotnetLibraryName }}
+            dotnetVersion: ${{ env.developmentFrameworkVersion}}
+            dotnetProjectName: ${{ env.dotnetLibraryName }}
+            solutionDirectory: ${{ env.rootDirectory }}/${{ env.libraryType }}/${{ env.dotnetLibraryName }}

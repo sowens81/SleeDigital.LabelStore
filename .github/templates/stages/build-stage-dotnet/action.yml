@@ -1,5 +1,5 @@
 name: build-stage-dotnet
-description:
+description: Stage for Building and Testing a .Net Solution.
 
 inputs: 
     dotnetVersion:
@@ -15,14 +15,16 @@ inputs:
 runs:
     using: "composite"
     steps:
+
+
         - name: dotnet-build
-        uses: ./.github/templates/steps/dotnet-build
-        with:
-            dotnetVersion: ${{ inputs.dotnetVersion}}
-            solutionDirectory: ${{ inputs.solutionDirectory}}
+            uses: ./.github/templates/steps/dotnet-build
+            with:
+                dotnetVersion: ${{ inputs.dotnetVersion}}
+                solutionDirectory: ${{ inputs.solutionDirectory}}
 
         - name: dotnet-codecoverage
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
-        uses: ./.github/templates/steps/dotnet-codecovrage
-            dotnetProjectName: ${{ inputs.dotnetProjectName}}
-            solutionDirectory: ${{ inputs.solutionDirectory}}
+            if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/Main' }}
+            uses: ./.github/templates/steps/dotnet-codecovrage
+                dotnetProjectName: ${{ inputs.dotnetProjectName}}
+                solutionDirectory: ${{ inputs.solutionDirectory}}
